@@ -20,17 +20,59 @@
 
   // ******** START CODING ON THE NEXT LINE ********
 
+    var body = new THREE.CylinderGeometry(100,100,100,50);
+    var cover = new THREE.MeshNormalMaterial(flat);
+    var avatar = new THREE.Mesh(body,cover);
+    
+    scene.add(avatar);
+    
+    var cabeza = new THREE.SphereGeometry(70);
+    var head = new THREE.Mesh(cabeza,cover);
+    head.position.set(0,130,0);
+ scene.add(head);
+    
+   var hand = new THREE.SphereGeometry(50);
+  
+  var handright = new THREE.Mesh(hand,cover);
+  handright.position.set(-150,0,0);
+ scene.add(handright);
+    
+    var handleft = new THREE.Mesh(hand,cover);
+   handleft.position.set(150,0,0);
+    scene.add(handleft);
+   
+    var foot = new THREE.SphereGeometry(50);
+    
+    var footright = new THREE.Mesh(foot,cover);
+    footright.position.set(-75,-110,0);
+     scene.add(footright);
+    
+    var footleft = new THREE.Mesh(foot,cover);
+    footleft.position.set(75,-110,0);
+     scene.add(footleft);
+    
+    
+    
+   
+    renderer.render(scene, camera);
+    
+    
+    
+    
+    
+    
+    
   // Start Animation
 
-  var clock = new THREE.Clock();
-  function animate() {
-    requestAnimationFrame(animate);
-    var t = clock.getElapsedTime();
+  //var clock = new THREE.Clock();
+  //function animate() {
+//    requestAnimationFrame(animate);
+//    var t = clock.getElapsedTime();
+//
+//    // Animation code goes here...
+//
+//    renderer.render(scene, camera);
+//  }
 
-    // Animation code goes here...
-
-    renderer.render(scene, camera);
-  }
-
-  animate();
+  //animate();
 </script>
