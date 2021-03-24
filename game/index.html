@@ -51,6 +51,24 @@
     footleft.position.set(75,-110,0);
      avatar.add(footleft);
     
+    document.addEventListener('keydown',teclaApretada);
+    function teclaApretada(event){
+        //alert(event.code);
+        var code = event.code;
+        if (code == 'KeyA'){
+            avatar.position.z +=5;  
+        }
+        if (code == 'KeyD') {
+            avatar.position.z -=5;
+        }
+        if (code == 'KeyS') {
+            avatar.position.x -=5;
+        }
+        if (code == 'KeyW') {
+            avatar.position.x +=5;
+        }   
+    }
+    
     function animate() {
         requestAnimationFrame(animate);
         
@@ -58,7 +76,9 @@
         renderer.render(scene, camera);
     }
     
+
     animate();
+    
     
   // Start Animation
 
