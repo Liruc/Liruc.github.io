@@ -51,6 +51,10 @@
     footleft.position.set(75,-110,0);
      avatar.add(footleft);
     
+    var isCartwheeling = false;
+   //var isFlipping = false;
+    
+    
     document.addEventListener('keydown',teclaApretada);
     function teclaApretada(event){
         //alert(event.code);
@@ -63,16 +67,22 @@
         }
         if (code == 'KeyS') {
             avatar.position.x -=5;
-        }
+        }c
         if (code == 'KeyW') {
             avatar.position.x +=5;
         }   
+        if (code == 'KeyC') {
+            isCartwheeling = !isCartwheeling;
+                
+        
+        }
     }
     
     function animate() {
         requestAnimationFrame(animate);
-        
-        avatar.rotation.z = avatar.rotation.z + 0.05;
+        if (isCartwheeling) {
+            avatar.rotation.z = avatar.rotation.z + 0.05;
+        }
         renderer.render(scene, camera);
     }
     
