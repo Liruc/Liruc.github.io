@@ -51,8 +51,8 @@
     footleft.position.set(75,-110,0);
      avatar.add(footleft);
     
-    var isCartwheeling = false;
-   //var isFlipping = false;
+    var isCartwheeling = true;
+   var isFlipping = false;
     
     
     document.addEventListener('keydown',teclaApretada);
@@ -74,12 +74,18 @@
         if (code == 'KeyC') {
             isCartwheeling = !isCartwheeling;  
         }
+        if (code == 'KeyV') {
+            isFlipping = !isFlipping;  
+        }
     }
     
     function animate() {
         requestAnimationFrame(animate);
         if (isCartwheeling) {
             avatar.rotation.z = avatar.rotation.z + 0.05;
+        }
+        if (isFlipping) {
+            avatar.rotation.x = avatar.rotation.x + 0.05;
         }
         renderer.render(scene, camera);
     }
