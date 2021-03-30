@@ -53,8 +53,33 @@
     
     var isCartwheeling = true;
    var isFlipping = false;
+   
     
-    
+    function makeTreeat(x,z) {
+        var tronco = new THREE.CylinderGeometry(50,50,200);
+        var textura = new THREE.MeshBasicMaterial({color:'sienna'});
+        
+        var tronco_sienna = new THREE.Mesh(tronco,textura)
+        
+        var copa = new THREE.SphereGeometry ( 150);
+        var textura_copa = new THREE.MeshBasicMaterial({color:'forestgreen'});
+        var copa_textura = new THREE.Mesh(copa,textura_copa);
+        
+        copa_textura.position.y =175;
+        tronco_sienna.add(copa_textura);
+        tronco_sienna.position.set(x,-75,z);
+        scene.add(tronco_sienna)
+    }
+    function hacerArboles(cantidad){
+        for(var i =1; i<cantidad; i++){
+           makeTreeat((Math.random()*500)-2500,-Math.random()*5000);
+    } }
+   hacerArboles(100);
+    //makeTreat(200,-500);
+    //makeTreat(-200,-500);
+        
+        
+        
     document.addEventListener('keydown',teclaApretada);
     function teclaApretada(event){
         //alert(event.code);
@@ -78,6 +103,7 @@
             isFlipping = !isFlipping;  
         }
     }
+
     
     function animate() {
         requestAnimationFrame(animate);
