@@ -13,7 +13,8 @@
   camera.position.z = 6500;
     camera.position.y = 2000;
   
-  scene.add(camera);
+  //scene.add(camera);
+
 
   // The "renderer" draws what the camera sees onto the screen:
   var renderer = new THREE.WebGLRenderer({antialias: true});
@@ -22,41 +23,52 @@
 
   // ******** START CODING ON THE NEXT LINE ********
 
+var marker = new THREE.Object3D();
+    scene.add(marker)
+//crear cuerpo
     var body = new THREE.CylinderGeometry(100,100,100,50);
     var cover = new THREE.MeshNormalMaterial(flat);
     var avatar = new THREE.Mesh(body,cover);
+    marker.add(avatar);
+    
+    
+    marker.add(camera);
     
     scene.add(avatar);
     avatar.position.set = (0,30,0); 
-    
+   
+//crear cabeza    
     var cabeza = new THREE.SphereGeometry(70);
     var head = new THREE.Mesh(cabeza,cover);
     head.position.set(0,130,0);
  avatar.add(head);
     
+//crear manos
    var hand = new THREE.SphereGeometry(50);
-  
-  var handright = new THREE.Mesh(hand,cover);
-  handright.position.set(-150,0,0);
- avatar.add(handright);
+   var handright = new THREE.Mesh(hand,cover);
+   handright.position.set(-150,0,0);
+   avatar.add(handright);
     
-    var handleft = new THREE.Mesh(hand,cover);
+   var handleft = new THREE.Mesh(hand,cover);
    handleft.position.set(150,0,0);
-    avatar.add(handleft);
+   avatar.add(handleft);
    
-    var foot = new THREE.SphereGeometry(50);
-    
-    var footright = new THREE.Mesh(foot,cover);
-    footright.position.set(-75,-110,0);
-     avatar.add(footright);
+//crear pierna
+   var foot = new THREE.SphereGeometry(50); 
+   var footright = new THREE.Mesh(foot,cover);
+   footright.position.set(-75,-110,0);
+   avatar.add(footright);
     
     var footleft = new THREE.Mesh(foot,cover);
     footleft.position.set(75,-110,0);
      avatar.add(footleft);
     
-    var isCartwheeling = true;
-   var isFlipping = false;
-   
+    //camera.lookAt(avatar.position);
+ 
+    //avatar.add(camera)
+ 
+  
+//crear árboles
     
     function makeTreeat(x,z) {
         var tronco = new THREE.CylinderGeometry(50,50,200);
@@ -74,6 +86,9 @@
         scene.add(tronco_sienna)
     }
     
+    
+    
+//crear árboles aleatorio    
     function hacerArboles(cantidad,ancho,largo){
         
         for(var i =1; i<cantidad; i++){
@@ -83,9 +98,9 @@
         } 
     }
    //hacerArboles(100,10000,10000);
+
     
-    camera.lookAt(avatar.position);
-    
+//crear campo árboles ordenado     
     function  crearCampoArboles(minimo_x,maximo_x,minimo_z,maximo_z,distancia_arboles){
     for (var x=minimo_x; x<=maximo_x; x= x+distancia_arboles){
     for (var z=minimo_z; z<=maximo_z; z= z+distancia_arboles){
@@ -110,23 +125,23 @@ crearCampoArboles(-3000,3000,-3000,3000,850)
    // } 
     // crearCampoCultivo();
         
-    
+//Añadido de teclas al avatar    
     document.addEventListener('keydown',teclaApretada);
     
     function teclaApretada(event){
         //alert(event.code);
         var code = event.code;
         if (code == 'KeyA'){
-            avatar.position.z +=5;  
+            marker.position.z +=5;  
         }
         if (code == 'KeyD') {
-            avatar.position.z -=5;
+            marker.position.z -=5;
         }
         if (code == 'KeyS') {
-            avatar.position.x -=5;
+            marker.position.x -=5;
         }
         if (code == 'KeyW') {
-            avatar.position.x +=5;
+            marker.position.x +=5;
         }   
         if (code == 'KeyC') {
             isCartwheeling = !isCartwheeling;  
@@ -136,6 +151,8 @@ crearCampoArboles(-3000,3000,-3000,3000,850)
         }
     }
 
+    var isCartwheeling = true;
+   var isFlipping = false;
     
     function animate() {
         requestAnimationFrame(animate);
