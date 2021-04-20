@@ -131,16 +131,16 @@ crearCampoArboles(-3000,3000,-3000,3000,850)
     function teclaApretada(event){
         //alert(event.code);
         var code = event.code;
-        if (code == 'KeyA'){
+        if (code == 'KeyW'){
             marker.position.z +=5;  
         }
-        if (code == 'KeyD') {
+        if (code == 'KeyS') {
             marker.position.z -=5;
         }
-        if (code == 'KeyS') {
+        if (code == 'KeyD') {
             marker.position.x -=5;
         }
-        if (code == 'KeyW') {
+        if (code == 'KeyA') {
             marker.position.x +=5;
         }   
         if (code == 'KeyC') {
