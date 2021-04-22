@@ -10,9 +10,8 @@
   // The "camera" is what sees the stuff:
   var aspectRatio = window.innerWidth / window.innerHeight;
   var camera = new THREE.PerspectiveCamera(75, aspectRatio, 1, 10000);
-  camera.position.z = 6500;
-    camera.position.y = 2000;
-  
+  camera.position.z = 500;
+    camera.position.y = 400; 
   //scene.add(camera);
 
 
@@ -22,7 +21,7 @@
   document.body.appendChild(renderer.domElement);
 
   // ******** START CODING ON THE NEXT LINE ********
-
+//creamos un objeto marcado
 var marker = new THREE.Object3D();
     scene.add(marker)
 //crear cuerpo
@@ -34,7 +33,7 @@ var marker = new THREE.Object3D();
     
     marker.add(camera);
     
-    scene.add(avatar);
+    //scene.add(avatar);
     avatar.position.set = (0,30,0); 
    
 //crear cabeza    
@@ -132,16 +131,16 @@ crearCampoArboles(-3000,3000,-3000,3000,850)
         //alert(event.code);
         var code = event.code;
         if (code == 'KeyW'){
-            marker.position.z +=5;  
+            marker.position.z = marker.position.z +=5; 
         }
         if (code == 'KeyS') {
-            marker.position.z -=5;
+            marker.position.z = marker.position.z -=5;
         }
         if (code == 'KeyD') {
-            marker.position.x -=5;
+            marker.rotation.y = marker.rotation.y -=5;
         }
         if (code == 'KeyA') {
-            marker.position.x +=5;
+            marker.rotation.y = marker.rotation.y +=5;
         }   
         if (code == 'KeyC') {
             isCartwheeling = !isCartwheeling;  
