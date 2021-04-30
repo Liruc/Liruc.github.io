@@ -146,12 +146,12 @@ crearCampoArboles(-3000,3000,-3000,3000,850)
         var code = event.code;
         //delante
         if (code == 'KeyW'){
-            avanzar(marker, marker.rotation.y,false);
+            avanzar(marker, marker.rotation.y,true);
             //marcador.position.z +=5; 
         }
         //atras
         if (code == 'KeyS') {
-            avanzar(marker, marker.rotation.y,true);
+            avanzar(marker, marker.rotation.y,false);
             //marcador.position.z -=5;
         }
         //izquierda
@@ -193,6 +193,12 @@ crearCampoArboles(-3000,3000,-3000,3000,850)
 }
     
     function avatarColisionando(){
+        var vector = new THREE.Vector3(0,-1,0);
+        var raycaster = new THREE.Raycaster(marker.position,vector);
+        
+        var intersects = raycaster.intersectObjects(listaColision);
+         if(intersects.length > 0) return true;
+        
         return false;
         
     }
