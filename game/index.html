@@ -130,18 +130,25 @@ crearCampoArboles(-3000,3000,-3000,3000,850)
     function teclaApretada(event){
         //alert(event.code);
         var code = event.code;
+        //delante
         if (code == 'KeyW'){
-            marker.position.z = marker.position.z +=5; 
+            avanzar(marker, marker.rotation.y,false);
+            //marcador.position.z +=5; 
         }
+        //atras
         if (code == 'KeyS') {
-            marker.position.z = marker.position.z -=5;
+            avanzar(marker, marker.rotation.y,true);
+            //marcador.position.z -=5;
         }
+        //izquierda
         if (code == 'KeyD') {
-            marker.rotation.y = marker.rotation.y -=0.01;
+             marker.rotation.y -=0.01;
         }
+        //derecha
         if (code == 'KeyA') {
-            marker.rotation.y = marker.rotation.y +=0.01;
+            marker.rotation.y +=0.01;
         }   
+        
         if (code == 'KeyC') {
             isCartwheeling = !isCartwheeling;  
         }
@@ -149,7 +156,25 @@ crearCampoArboles(-3000,3000,-3000,3000,850)
             isFlipping = !isFlipping;  
         }
     }
+    
+    
+    function avanzar(objeto,radianes, atras=false){
+    if (atras){ radianes = radianes + Math.PI};
+    var grado =(180*radianes/Math.PI);
 
+    console.log("Grados:"+ grado);
+    console.log("X:"+ objeto.position.x);
+    console.log("Z:"+ objeto.position.z);
+    console.log("cos(radianes):"+ Math.cos(radianes));
+    console.log("sin(radianes):"+ Math.sin(radianes));
+
+    objeto.position.x += -20*Math.sin(radianes);
+    objeto.position.z += -20*Math.cos(radianes);
+}
+    
+
+
+    
     var isCartwheeling = true;
    var isFlipping = false;
     
