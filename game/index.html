@@ -21,6 +21,7 @@
   document.body.appendChild(renderer.domElement);
 
   // ******** START CODING ON THE NEXT LINE ********
+ listaColision = []   
 //creamos un objeto marcado
 var marker = new THREE.Object3D();
     scene.add(marker)
@@ -82,6 +83,16 @@ var marker = new THREE.Object3D();
         copa_textura.position.y =175;
         tronco_sienna.add(copa_textura);
         tronco_sienna.position.set(x,-75,z);
+        //Añadimos el límite de colisión
+        
+        var circulo = new THREE.CircleGeometry(300);
+        var invisible = new THREE.MeshNormalMaterial({transparente:true, opacity :1});
+        var limite = new THREE.Mesh(circulo,invisible);
+        limite.position.y = -100;
+        limite.rotation.x = -Math.PI/2;
+        tronco_sienna.add(limite);
+        listaColision.push(limite);
+            
         scene.add(tronco_sienna)
     }
     
@@ -114,6 +125,9 @@ var maximo_x = 3000;
 var minimo_z = -3000;
 var maximo_z = 3000;
 
+//Creacion de los objetos del mundo
+    
+//listaColision = []   
 crearCampoArboles(-3000,3000,-3000,3000,850)
 
     //makeTreat(200,-500);
@@ -168,14 +182,23 @@ crearCampoArboles(-3000,3000,-3000,3000,850)
     console.log("cos(radianes):"+ Math.cos(radianes));
     console.log("sin(radianes):"+ Math.sin(radianes));
 
-    objeto.position.x += -20*Math.sin(radianes);
-    objeto.position.z += -20*Math.cos(radianes);
+    objeto.position.x += 20*Math.sin(radianes);
+    objeto.position.z += 20*Math.cos(radianes);
+        
+        if (avatarColisionando()){
+            objeto.position.x += -20*Math.sin(radianes);
+            objeto.position.z += -20*Math.cos(radianes);
+        }
+               
 }
     
-
-
+    function avatarColisionando(){
+        return true;
+        
+    }
     
-    var isCartwheeling = true;
+    
+   var isCartwheeling = true;
    var isFlipping = false;
     
     function animate() {
