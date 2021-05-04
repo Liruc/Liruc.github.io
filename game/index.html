@@ -11,7 +11,7 @@
   var aspectRatio = window.innerWidth / window.innerHeight;
   var camera = new THREE.PerspectiveCamera(75, aspectRatio, 1, 10000);
   camera.position.z = 500;
-    camera.position.y = 400; 
+    camera.position.y = 0; 
   //scene.add(camera);
 
 
@@ -119,7 +119,7 @@ var marker = new THREE.Object3D();
 }
     } 
 
-var distancia_arboles = 850;
+var distancia_arboles = 2000;
 var minimo_x = -3000;
 var maximo_x = 3000;
 var minimo_z = -3000;
@@ -156,11 +156,11 @@ crearCampoArboles(-3000,3000,-3000,3000,850)
         }
         //izquierda
         if (code == 'KeyD') {
-             marker.rotation.y -=0.01;
+             marker.rotation.y -=0.05;
         }
         //derecha
         if (code == 'KeyA') {
-            marker.rotation.y +=0.01;
+            marker.rotation.y +=0.05;
         }   
         
         if (code == 'KeyC') {
