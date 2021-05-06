@@ -1,5 +1,6 @@
 <body></body>
 <script src="/lib/three.js"></script>
+<script src="/lib/Scoreboard.js"></script>
 <script>
   // The "scene" is where stuff in our game will happen:
   var scene = new THREE.Scene();
@@ -21,7 +22,24 @@
   document.body.appendChild(renderer.domElement);
 
   // ******** START CODING ON THE NEXT LINE ********
- listaColision = []   
+  var scoreboard = new Scoreboard();
+   scoreboard.countdown(20);
+   scoreboard.score();
+   scoreboard.help(
+       'Arrow keys to move.'+
+       'Space bar to jump for fruit.'+
+       'Watch for shaking trees with fruit.'+
+       'Get near the tree and jump before the fruit is gone.'
+   );
+    
+   scoreboard.onTimeExpired(timeExpired);
+    function timeExpired(){
+        scoreboard.message("Game over");
+    }
+ 
+    
+ listaColision = [];
+  
 //creamos un objeto marcado
 var marker = new THREE.Object3D();
     scene.add(marker)
@@ -69,6 +87,9 @@ var marker = new THREE.Object3D();
  
   
 //crear árboles
+    
+    var notAllowed = [];
+    var treeTops = []; 
     
     function makeTreeat(x,z) {
         var tronco = new THREE.CylinderGeometry(50,50,200);
