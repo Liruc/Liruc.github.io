@@ -1,6 +1,8 @@
 <body></body>
 <script src="/lib/three.js"></script>
 <script src="/lib/Scoreboard.js"></script>
+<script src="/lib/tween.umd.js"></script>
+<script src="/lib/Sounds.js"></script>
 <script>
   // The "scene" is where stuff in our game will happen:
   var scene = new THREE.Scene();
@@ -23,7 +25,7 @@
 
   // ******** START CODING ON THE NEXT LINE ********
   var scoreboard = new Scoreboard();
-   scoreboard.countdown(20);
+   scoreboard.countdown(40);
    scoreboard.score();
    scoreboard.help(
        'Arrow keys to move.'+
@@ -34,7 +36,7 @@
     
    scoreboard.onTimeExpired(timeExpired);
     function timeExpired(){
-        scoreboard.message("Game over");
+        scoreboard.message("GAME OVER!!");
     }
  
     
@@ -84,13 +86,11 @@ var marker = new THREE.Object3D();
     //camera.lookAt(avatar.position);
  
     //avatar.add(camera)
- 
+    
+    
+var treeTops = []; 
   
 //crear árboles
-    
-    var notAllowed = [];
-    var treeTops = []; 
-    
     function makeTreeat(x,z) {
         var tronco = new THREE.CylinderGeometry(50,50,200);
         var textura = new THREE.MeshBasicMaterial({color:'sienna'});
@@ -112,9 +112,10 @@ var marker = new THREE.Object3D();
         limite.position.y = -100;
         limite.rotation.x = -Math.PI/2;
         tronco_sienna.add(limite);
-        listaColision.push(limite);
-            
+        listaColision.push(limite);   
         scene.add(tronco_sienna)
+        
+        treeTops.push(top);
     }
     
     
@@ -158,7 +159,38 @@ crearCampoArboles(-3000,3000,-3000,3000,850)
      //   for ()
    // } 
     // crearCampoCultivo();
-        
+
+   //Función frutas
+    var treasureTreeNumber;
+    function updateTreasureTreeNumber (){
+        var rand = Math.random() * treeTops.length;
+        treasureTreeNumber = Math.floor(rand);
+    }
+
+//Agitar los árboles
+function shakeTreasureTree() {
+    updateTreasureTreeNumber();
+
+    var tween = new TWEEN.Tween({shake: 0});
+    tween.to ({shake: 20 * 2 * Math.PI}, 8*1000);
+    tween.onUpdate (shakeTreeUpdate);
+    tween.onComplete(shakeTreeComplete);
+    tween.start();
+}
+
+function shakeTreeUpdate(update){
+    var top = treeTops[treasureTreeNumber];
+    top.position.x = 50*Math.sin(update.shake);
+}
+
+function shakeTreeComplete(){
+    var top = treeTops[treasureTreeNumber];
+    top.position.x = 0;
+    setTimeout(shakeTreasureTree, 2*1000);
+}   
+
+shakeTreasureTree(); 
+       
 //Añadido de teclas al avatar    
     document.addEventListener('keydown',teclaApretada);
     
@@ -190,8 +222,79 @@ crearCampoArboles(-3000,3000,-3000,3000,850)
         if (code == 'KeyV') {
             isFlipping = !isFlipping;  
         }
+        if (code =='Space')
+            jump() ;
     }
     
+    //función de saltar
+    function jump(){
+    if (avatar.position.y > 0) return;
+    checkForTreasure();
+    animateJump();
+}
+
+ function checkForTreasure (){
+    var top = treeTops [treasureTreeNumber];
+    var tree = top.parent;
+    var p1= tree.position;
+    var p2 = marker.position;
+    var xDiff = p1.x - p2.x;
+    var zDiff = p1.z - p2.z;
+
+    var distance = Math.sqrt(xDiff*xDiff + zDiff*zDiff);
+    if (distance < 500) scorePoints();
+}
+
+
+function scorePoints(){
+    if (scoreboard.getTimeRemaining() ==0)return;
+    scoreboard.addPoints(10);
+    Sounds.bubble.play();
+    animateFruit();
+}
+var fruit;
+    function animateFruit(){
+        if(fruit) return;
+        
+        fruit = new THREE.Mesh(
+        new THREE.CylinderGeometry(25,25,5,25),
+        new THREE.MeshBasizMaterial({color:'gold'})
+        );
+        marker.add(fruit);
+        
+        var tween = new TWEEN.Tween({height:200,spin:0});
+        tween.to({height:350,spin:2*Math.PI},500);
+        tween.onUpdate(animateFruitUpdate);
+        tween.onComplete(animateFruitComplete);
+        tween.start();
+    }
+
+    function animateFruitUpdate(update){
+        fruit.position.y = update.height;
+        fruit.rotation.x = update.spin;
+    }
+    
+    function animateFruitComplete(){
+        marker.remove(fruit);
+        fruit = underfined;
+    }
+    
+//Animación saltar
+function animateJump(){
+    var tween = new TWEEN.Tween({jump: 0});
+    tween.to({jump: Math.PI}, 400);
+    tween.onUpdate (animateJumpUpdate);
+    tween.onComplete(animateJumpComplete);
+    tween.start();
+}
+
+function animateJumpUpdate(update){
+    avatar.position.y = 100 * Math.sin(update.jump);
+}
+
+function animateJumpComplete(){
+    avatar.position.y = 0;
+}
     
     function avanzar(objeto,radianes, atras=false){
     if (atras){ radianes = radianes + Math.PI};
