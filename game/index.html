@@ -85,6 +85,7 @@ var marker = new THREE.Object3D();
  
     //avatar.add(camera)
     
+
 listaColision = [];   
 var treeTops = []; 
   
@@ -111,7 +112,8 @@ var treeTops = [];
         limite.rotation.x = -Math.PI/2;
         tronco_sienna.add(limite);
         listaColision.push(limite);   
-        scene.add(tronco_sienna);
+
+     scene.add(tronco_sienna);
         
         treeTops.push(top);
     }
@@ -159,6 +161,7 @@ crearCampoArboles(-3000,3000,-3000,3000,850)
     // crearCampoCultivo();
 
 //Función frutas
+   //Función frutas
     var treasureTreeNumber;
     function updateTreasureTreeNumber (){
         var rand = Math.random() * treeTops.length;
@@ -250,8 +253,8 @@ function scorePoints(){
     Sounds.bubble.play();
     animateFruit();
 }
-
-    var fruit;
+    
+var fruit;
     function animateFruit(){
         if(fruit) return;
         
